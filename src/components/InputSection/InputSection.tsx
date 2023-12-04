@@ -1,15 +1,5 @@
 import { FormEvent } from "react";
 
-// const RepositorySearchQuery = graphql`
-//   query InputSectionRepositorySearchQuery {
-//     search(query: "green", type: REPOSITORY, first: 10) {
-//       repositoryCount
-//     }
-//   }
-// `;
-
-// const preloadedQuery = loadQuery(RelayEnvironment, RepositorySearchQuery, {});
-
 type InputSectionProps = {
   keyword: string;
   onKeywordChange: (keyword: string) => void;
