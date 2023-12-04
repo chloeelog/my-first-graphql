@@ -47,11 +47,11 @@ export const RepositoryItem = (props: RepositoryItemProps) => {
     props.repository
   );
 
-  const [add] = useMutation<RepositoryItemAddStarMutation>(
+  const [add, isAdding] = useMutation<RepositoryItemAddStarMutation>(
     RepositoryStarAddMutation
   );
 
-  const [remove] = useMutation<RepositoryItemRemoveStarMutation>(
+  const [remove, isRemoving] = useMutation<RepositoryItemRemoveStarMutation>(
     RepositoryStarRemoveMutation
   );
 
@@ -62,6 +62,8 @@ export const RepositoryItem = (props: RepositoryItemProps) => {
   const { id, url, name, description, stargazerCount, viewerHasStarred } =
     payload;
 
+  const isLoading = isAdding || isRemoving;
+
   return (
     <li>
       <a href={url} target="_blank" rel="noreferrer">
@@ -69,14 +71,17 @@ export const RepositoryItem = (props: RepositoryItemProps) => {
       </a>
       <p>{description}</p>
       <p>⭐️ {stargazerCount}</p>
-      {/* <Suspense fallback={<p>⏳</p>}> */}
-      <StarButton
-        repositoryId={id}
-        isStarred={viewerHasStarred}
-        onAddStar={() => add({ variables: { id } })}
-        onRemoveStar={() => remove({ variables: { id } })}
-      />
-      {/* </Suspense> */}
+
+      {isLoading ? (
+        <div>...</div>
+      ) : (
+        <StarButton
+          repositoryId={id}
+          isStarred={viewerHasStarred}
+          onAddStar={() => add({ variables: { id } })}
+          onRemoveStar={() => remove({ variables: { id } })}
+        />
+      )}
     </li>
   );
 };
