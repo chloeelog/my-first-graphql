@@ -14,6 +14,12 @@ dependencies:
   react-relay:
     specifier: ^16.0.0
     version: 16.0.0(react@18.2.0)
+  react-router:
+    specifier: ^6.20.1
+    version: 6.20.1(react@18.2.0)
+  react-router-dom:
+    specifier: ^6.20.1
+    version: 6.20.1(react-dom@18.2.0)(react@18.2.0)
   relay-runtime:
     specifier: ^16.0.0
     version: 16.0.0
@@ -607,6 +613,11 @@ packages:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.15.0
     dev: true
+
+  /@remix-run/router@1.13.1:
+    resolution: {integrity: sha512-so+DHzZKsoOcoXrILB4rqDkMDy7NLMErRdOxvzvOKb507YINKUP4Di+shbTZDhSE/pBZ+vr7XGIpcOO0VLSA+Q==}
+    engines: {node: '>=14.0.0'}
+    dev: false
 
   /@rollup/rollup-android-arm-eabi@4.5.1:
     resolution: {integrity: sha512-YaN43wTyEBaMqLDYeze+gQ4ZrW5RbTEGtT5o1GVDkhpdNcsLTnLRcLccvwy3E9wiDKWg9RIhuoy3JQKDRBfaZA==}
@@ -1924,6 +1935,29 @@ packages:
       relay-runtime: 16.0.0
     transitivePeerDependencies:
       - encoding
+    dev: false
+
+  /react-router-dom@6.20.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-npzfPWcxfQN35psS7rJgi/EW0Gx6EsNjfdJSAk73U/HqMEJZ2k/8puxfwHFgDQhBGmS3+sjnGbMdMSV45axPQw==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      react: '>=16.8'
+      react-dom: '>=16.8'
+    dependencies:
+      '@remix-run/router': 1.13.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      react-router: 6.20.1(react@18.2.0)
+    dev: false
+
+  /react-router@6.20.1(react@18.2.0):
+    resolution: {integrity: sha512-ccvLrB4QeT5DlaxSFFYi/KR8UMQ4fcD8zBcR71Zp1kaYTC5oJKYAp1cbavzGrogwxca+ubjkd7XjFZKBW8CxPA==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      react: '>=16.8'
+    dependencies:
+      '@remix-run/router': 1.13.1
+      react: 18.2.0
     dev: false
 
   /react@18.2.0:
