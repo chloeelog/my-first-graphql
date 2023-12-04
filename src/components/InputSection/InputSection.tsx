@@ -20,7 +20,6 @@ export const InputSection = (props: InputSectionProps) => {
     }
 
     props.onInputSubmit(props.keyword);
-    // props.onKeywordChange("");
   };
 
   return (
