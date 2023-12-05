@@ -22,7 +22,7 @@ export const SearchPage = () => {
       <InputSection initialValue={keyword} onSubmit={handleSearch} />
       {keyword ? (
         <Suspense fallback={<p>검색중...</p>}>
-          <ListSection />
+          <ListSection keyword={keyword} />
         </Suspense>
       ) : (
         <p>검색어를 입력해주세요</p>
