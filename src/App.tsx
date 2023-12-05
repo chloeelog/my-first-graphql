@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { RelayEnvironmentProvider } from "react-relay/hooks";
 import { RelayEnvironment } from "./RelayEnvironment";
 
-import { SearchPage } from "./SearchPage";
+import { SearchPage } from "./components/SearchPage";
 
 function App() {
   return (

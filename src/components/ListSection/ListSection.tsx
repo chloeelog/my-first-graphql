@@ -1,16 +1,15 @@
 import { useLazyLoadQuery } from "react-relay";
-import { useSearchParams } from "react-router-dom";
-
 import { graphql } from "relay-runtime";
 
 import { ListSectionRepositorySearchQuery } from "./__generated__/ListSectionRepositorySearchQuery.graphql";
 
 import { RepositoryPagination } from "./RepositoryPagination";
 
-export const ListSection = () => {
-  const [searchParams] = useSearchParams();
-  const keyword = searchParams.get("keyword") || "";
+type ListSectionProps = {
+  keyword: string;
+};
 
+export const ListSection = (props: ListSectionProps) => {
   const data = useLazyLoadQuery<ListSectionRepositorySearchQuery>(
     graphql`
       query ListSectionRepositorySearchQuery($keyword: String!) {
@@ -18,7 +17,7 @@ export const ListSection = () => {
       }
     `,
     {
-      keyword,
+      keyword: props.keyword,
     }
   );
 
