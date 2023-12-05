@@ -10,28 +10,6 @@ type RepositoryItemProps = {
   repository: RepositoryItem_repository$key;
 };
 
-const RepositoryStarAddMutation = graphql`
-  mutation RepositoryItemAddStarMutation($id: ID!) {
-    addStar(input: { starrableId: $id }) {
-      starrable {
-        id
-        viewerHasStarred
-      }
-    }
-  }
-`;
-
-const RepositoryStarRemoveMutation = graphql`
-  mutation RepositoryItemRemoveStarMutation($id: ID!) {
-    removeStar(input: { starrableId: $id }) {
-      starrable {
-        id
-        viewerHasStarred
-      }
-    }
-  }
-`;
-
 export const RepositoryItem = (props: RepositoryItemProps) => {
   const payload = useFragment(
     graphql`
@@ -48,12 +26,40 @@ export const RepositoryItem = (props: RepositoryItemProps) => {
   );
 
   const [add, isAdding] = useMutation<RepositoryItemAddStarMutation>(
-    RepositoryStarAddMutation
+    graphql`
+      mutation RepositoryItemAddStarMutation($id: ID!) {
+        addStar(input: { starrableId: $id }) {
+          starrable {
+            id
+            viewerHasStarred
+          }
+        }
+      }
+    `
   );
 
+  const handleAddStar = (id: string) => {
+    add({ variables: { id } });
+  };
+
   const [remove, isRemoving] = useMutation<RepositoryItemRemoveStarMutation>(
-    RepositoryStarRemoveMutation
+    graphql`
+      mutation RepositoryItemRemoveStarMutation($id: ID!) {
+        removeStar(input: { starrableId: $id }) {
+          starrable {
+            id
+            viewerHasStarred
+          }
+        }
+      }
+    `
   );
+
+  const handleRemoveStar = (id: string) => {
+    remove({ variables: { id } });
+  };
+
+  const isLoading = isAdding || isRemoving;
 
   if (!payload) {
     return null;
@@ -61,8 +67,6 @@ export const RepositoryItem = (props: RepositoryItemProps) => {
 
   const { id, url, name, description, stargazerCount, viewerHasStarred } =
     payload;
-
-  const isLoading = isAdding || isRemoving;
 
   return (
     <li>
@@ -72,16 +76,13 @@ export const RepositoryItem = (props: RepositoryItemProps) => {
       <p>{description}</p>
       <p>⭐️ {stargazerCount}</p>
 
-      {isLoading ? (
-        <div>...</div>
-      ) : (
-        <StarButton
-          repositoryId={id}
-          isStarred={viewerHasStarred}
-          onAddStar={() => add({ variables: { id } })}
-          onRemoveStar={() => remove({ variables: { id } })}
-        />
-      )}
+      <StarButton
+        repositoryId={id}
+        isStarred={viewerHasStarred}
+        onAddStar={handleAddStar}
+        onRemoveStar={handleRemoveStar}
+        isLoading={isLoading}
+      />
     </li>
   );
 };

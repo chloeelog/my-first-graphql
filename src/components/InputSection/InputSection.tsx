@@ -1,30 +1,27 @@
-import { FormEvent } from "react";
+import { FormEvent, useRef } from "react";
 
 type InputSectionProps = {
-  keyword: string;
-  onKeywordChange: (keyword: string) => void;
-  onInputSubmit: (keyword: string) => void;
+  initialValue: string;
+  onSubmit: (keyword: string) => void;
 };
 
 export const InputSection = (props: InputSectionProps) => {
-  const handleChange = (event: FormEvent<HTMLInputElement>) => {
-    props.onKeywordChange(event.currentTarget.value);
-  };
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!props.keyword) {
-      alert("검색어를 입력해주세요.");
-      return;
+    if (!inputRef.current) {
+      throw new Error("검색창에 문제가 발생했어요!");
     }
 
-    props.onInputSubmit(props.keyword);
+    const keyword: string = inputRef.current.value.trim();
+    props.onSubmit(keyword);
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" value={props.keyword} onChange={handleChange} />
+      <input ref={inputRef} type="text" defaultValue={props.initialValue} />
       <button type="submit">검색</button>
     </form>
   );
